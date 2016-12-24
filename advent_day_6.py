@@ -26,6 +26,6 @@ with open('input6.txt') as santa_code:
             result[i].append(char)
 
 for num in xrange(len(result)):
-    result_str += str(max(result[num], key=result[num].count))
+    result_str += str(min(result[num], key=result[num].count))
 
 print result_str
