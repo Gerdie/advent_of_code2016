@@ -6,8 +6,10 @@ test_data = ["aaaaa-bbb-z-y-x-123[abxyz]",
              "totally-real-room-200[decoy]"]
 
 real_sectors = []
+sector_names = []
 
 i = 0
+alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
 
 with open('input4.txt') as room_codes:
     for line in room_codes:
@@ -27,12 +29,32 @@ with open('input4.txt') as room_codes:
                     if letter not in contenders:
                         contenders.append(letter)
                         break
-
         if checksum == "".join(contenders[:5]):
             real_sectors.append(sector)
-        # print coded, sector, checksum, "".join(contenders[:5]), len(checksum), len("".join(contenders[:5]))
+            sector_names.append(" ".join(coded))
         i += 1
 
 print "real sectors: ", len(real_sectors)
 print "end sum: ", sum(real_sectors)
+
+# real sectors:  749
+# end sum:  409147
+
+for i3, name in enumerate(sector_names):
+    shift = real_sectors[i3]
+    decoded = ""
+    while shift > 26:
+        shift -= 26
+    for char in name:
+        if char == " ":
+            new_char = " "
+        else:
+            new_char = alphabet[alphabet.index(char) + shift]
+        decoded = decoded + new_char
+    if "north" in decoded:
+        print decoded, real_sectors[i3]
+    sector_names[i3] = decoded
+
+# northpole object storage 991
+
         
