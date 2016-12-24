@@ -23,33 +23,16 @@ with open('input4.txt') as room_codes:
         contenders = []
         ties = []
         for num in top_five:
-            if top_five.count(num) == 1:
-                for letter in c:
-                    if c[letter] == num:
-                        contenders.append(letter)
-                        print "pass 1: ", contenders
-                        break
-            else:
-                for letter in [l for l in sorted(c.keys()) if c[l] == num]:
+            for letter in [l for l in sorted(c.keys()) if c[l] == num]:
                     if letter not in contenders:
                         contenders.append(letter)
                         break
-                    # if c[letter] == num and letter not in ties:
-                    #     print "letter: {}, ties: {}".format(letter, ties)
-                    #     ties.append(letter)
-                    #     print "ties: {} & num: {}".format(ties, num)
-                    #     print "len(ties) = {} and top_five.count(num) = {}".format(len(ties), top_five.count(num))
-                    #     if len(ties) == top_five.count(num):
-                    #         contenders = contenders + sorted(ties)
-                    #         ties = []
-                    #         print "pass 2: ", contenders
-                    #     break
 
         if checksum == "".join(contenders[:5]):
             real_sectors.append(sector)
         # print coded, sector, checksum, "".join(contenders[:5]), len(checksum), len("".join(contenders[:5]))
         i += 1
 
-print "real sectors: ", real_sectors
+print "real sectors: ", len(real_sectors)
 print "end sum: ", sum(real_sectors)
         
