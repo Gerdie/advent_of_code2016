@@ -33,4 +33,10 @@ with open('input8.txt') as screen_reader:
                     screen[5][col] = r4
 
 print sum(screen[num].count('X') for num in xrange(6))
-# Part A: 123
+# Part 1: 123
+
+for y in screen:
+    for x in y:
+        print x,
+    print "\n"
+# Part 2: AFBUPZBJPS
