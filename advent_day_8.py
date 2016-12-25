@@ -18,9 +18,19 @@ with open('input8.txt') as screen_reader:
             if line[1] == "row":
                 row = int(line[2][2:])
                 shift = int(line[-1])
+                for x in xrange(shift):
+                    screen[row] = screen[row][-1:] + screen[row][:-1]
             else:
                 col = int(line[2][2:])
                 shift = int(line[-1])
+                for y in xrange(shift):
+                    r0, r1, r2, r3, r4, r5 = [screen[y1][col] for y1 in xrange(6)]
+                    screen[0][col] = r5
+                    screen[1][col] = r0
+                    screen[2][col] = r1
+                    screen[3][col] = r2
+                    screen[4][col] = r3
+                    screen[5][col] = r4
 
-print len(screen[0]), len(screen)
 print sum(screen[num].count('X') for num in xrange(6))
+# Part A: 123
