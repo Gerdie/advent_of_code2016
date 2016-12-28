@@ -2,6 +2,10 @@ word_count = 0
 inside = False
 eval_i = None
 ignore = 0
+test_cases = ["(3x3)XYZ",
+              "A(2x2)BCD(2x2)EFG",
+              "(6x1)(1x3)A",
+              "X(8x2)(3x3)ABCY"]
 
 with open('input9.txt') as compressed_file:
     for line in compressed_file:
