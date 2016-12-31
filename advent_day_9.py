@@ -16,8 +16,6 @@ print "Took {} seconds to read input file".format(compressed_time - starting)
 
 def decompress_file(s):
     word_count = 0
-    if '(' not in s:
-        word_count = len(s)
     while '(' in s:
         start = s.find('(')
         end = s.find(')', start)
@@ -25,7 +23,9 @@ def decompress_file(s):
         marker = s[start+1:end].split('x')
         char_amt = int(marker[0])
         repeat_amt = int(marker[1])
-        s = s[end+1: end+char_amt] * repeat_amt + s[end+1:]
+        s = s[end+1: end+char_amt] * repeat_amt + s[end+1+char_amt:]
+    if '(' not in s:
+        word_count += len(s)
 
     return word_count
 
