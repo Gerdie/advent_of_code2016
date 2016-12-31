@@ -23,16 +23,16 @@ def decompress_file(s):
         marker = s[start+1:end].split('x')
         char_amt = int(marker[0])
         repeat_amt = int(marker[1])
-        s = s[end+1: end+char_amt] * repeat_amt + s[end+1+char_amt:]
-    if '(' not in s:
-        word_count += len(s)
+        s = s[end+1: end+1+char_amt] * repeat_amt + s[end+1+char_amt:]
+    word_count += len(s)
 
     return word_count
 
 
-print decompress_file(more_tests)
+print decompress_file(compressed_file)
 
 ending = time()
 
 print "Took {} seconds to decompress file".format(ending - compressed_time)
 # Part 1: 150914
+# Part 2: 11052855125
