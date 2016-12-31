@@ -1,56 +1,38 @@
-word_count = 0
-inside = False
-parens = False
-ignore = -1
+from time import time
+
 test_cases = ["(3x3)XYZ",
               "A(2x2)BCD(2x2)EFG",
               "(6x1)(1x3)A",
               "X(8x2)(3x3)ABCY"]
 
-# def compress_file(line):
-# word_count = ""
-# inside = False
-# parens = False
-# ignore = -1
-with open('input9.txt') as compressed_file:
-    for line in compressed_file:
-        while '(' in line:
-            inside = False
-            ignore = -1
-            decomp_line = ""
-            for i, char in enumerate(line.rstrip()):
-                if char in "    " or i < ignore:
-                    continue
-                if char == '(':
-                    parens = True
-                    if i > ignore:
-                        start = i
-                        inside = True
-                elif char == ')' and i > ignore:
-                    end = i
-                    inside = False
-                    compress = line[start+1: end].split("x")
-                    print compress
-                    # eval_i = i+1
-                    char_amt = int(compress[0])
-                    repeat_amt = int(compress[1])
-                    decomp_line += line[i+1: i + char_amt + 1] * repeat_amt
-                    ignore = i + char_amt
-                if i > ignore and not inside:
-                    decomp_line += char
-            line = decomp_line
-        word_count += len(line)
+more_tests = "(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN"  # should be 445
 
-# secondary = open('secondary.txt', 'w')
-# secondary.write(word_count)
-    # if parens:
-    #     compress_file(word_count)
-    print word_count
 
-# with open('input9.txt') as compressed_file:
-#     word_total = ""
-#         for line in compressed_file:
-#             word_total += compress_file(line)
-#         if parens:
-#             compress_file(word_count)
+starting = time()
+compressed_file = open('input9.txt').read().strip()
+compressed_time = time()
+print "Took {} seconds to read input file".format(compressed_time - starting)
+
+
+def decompress_file(s):
+    word_count = 0
+    if '(' not in s:
+        word_count = len(s)
+    while '(' in s:
+        start = s.find('(')
+        end = s.find(')', start)
+        word_count += start
+        marker = s[start+1:end].split('x')
+        char_amt = int(marker[0])
+        repeat_amt = int(marker[1])
+        s = s[end+1: end+char_amt] * repeat_amt + s[end+1:]
+
+    return word_count
+
+
+print decompress_file(more_tests)
+
+ending = time()
+
+print "Took {} seconds to decompress file".format(ending - compressed_time)
 # Part 1: 150914
