@@ -26,6 +26,7 @@ class AllBots(object):
         for bot in self.bots:
             if bot.num == bot_num:
                 return bot
+
     def __repr__(self):
         repr_string = ""
         for bot in self.bots:
@@ -44,47 +45,22 @@ for line in lines:
         if bots[0] not in bot.nums:
             bot.nums.append(bots[0])
             bot.nums.sort()
-        # all_bots[bots[1]].append(bots[0])
+    else:
+        bot = all_bots.find_bot(bots[0])
+        if not bot:
+            bot = Bot(bots[0])
+            all_bots.add_bot(bot)
+        line = line.split()
+        if line[5] == "bot":
+            bot.low = all_bots.find_bot(bots[1])
+            if not all_bots.find_bot(bots[1]):
+                new_low = Bot(bots[1])
+                all_bots.add_bot(new_low)
+                bot.low = new_low
+        if line[10] == "bot":
+            bot.high = all_bots.find_bot(bots[2])
+            if not all_bots.find_bot(bots[2]):
+                new_high = Bot(bots[2])
+                all_bots.add_bot(new_high)
+                bot.high = new_low 
 print all_bots
-
-    # bots = {}
-    # for line in bot_file:
-    #     line = line.rstrip().split()
-    #     if line[0] == "value":
-    #         value = int(line[1])
-    #         destination = line[-2]
-    #         destination_num = line[-1]
-    #         if destination == "bot":
-    #             bots[destination_num] = bots.get(destination_num, {"low_to": None, "high_to": None, "nums": set()})
-    #             bots[destination_num]["nums"].add(value)
-    #             if len(bots[destination_num]["nums"]) == 2:
-    #                 print giver_bot, "should be 104"
-    #                 low, high = sorted(list(bots[destination_num]["nums"]))
-    #                 if bots[destination_num]["low_to"]:
-    #                     low_recipient = bots[destination_num]["low_to"]
-    #                     bots[low_recipient = bots.get(low_recipient, {"low_to": None, "high_to": None, "nums": set()})
-    #                     bots[low_recipient["nums"].add(low)
-    #                 if bots[destination_num]["high_to"]:
-    #                     bots[high_recipient[1]] = bots.get(high_recipient[1], {"low_to": None, "high_to": None, "nums": set()})
-    #                     bots[high_recipient[1]]["nums"].add(high)
-    #     else:
-    #         giver_bot = line[1]
-    #         low_recipient = line[5:7]
-    #         high_recipient = line[10:]
-    #         bots[giver_bot] = bots.get(giver_bot, {"low_to": None, "high_to": None, "nums": set()})
-    #         bots[giver_bot]["low_to"] = low_recipient[1]
-    #         bots[giver_bot]["high_to"] = high_recipient[1]
-    #         if len(bots[giver_bot]["nums"]) == 2:
-    #             # print giver_bot, "should be 104"
-    #             low, high = sorted(list(bots[giver_bot]["nums"]))
-    #             if low_recipient[0] == "bot":
-    #                 bots[low_recipient[1]] = bots.get(low_recipient[1], {"low_to": None, "high_to": None, "nums": set()})
-    #                 bots[low_recipient[1]]["nums"].add(low)
-    #             if high_recipient[0] == "bot":
-    #                 bots[high_recipient[1]] = bots.get(high_recipient[1], {"low_to": None, "high_to": None, "nums": set()})
-    #                 bots[high_recipient[1]]["nums"].add(high)
-
-# for k in bots:
-#     print k, bots[k]
-
-# print len(bots), complete_sets
