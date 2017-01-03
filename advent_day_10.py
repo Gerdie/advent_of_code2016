@@ -1,11 +1,51 @@
 import re
+# from collections import defaultdict
 
 lines = open('input10.txt').read().split('\n')
 numbers = re.compile(r'(\d+)')
+# all_bots = defaultdict(list)
+
+
+class Bot(object):
+
+    def __init__(self, num):
+        self.num = num
+        self.nums = []
+        self.high = None
+        self.low = None
+
+class AllBots(object):
+
+    def __init__(self):
+        self.bots = set()
+
+    def add_bot(self, bot):
+        self.bots.add(bot)
+
+    def find_bot(self, bot_num):
+        for bot in self.bots:
+            if bot.num == bot_num:
+                return bot
+    def __repr__(self):
+        repr_string = ""
+        for bot in self.bots:
+            repr_string += str(bot.num) + ", "
+        return repr_string
+
+all_bots = AllBots()
 
 for line in lines:
     bots = map(int, numbers.findall(line))
-
+    if line[0] == "v":
+        bot = all_bots.find_bot(bots[1])
+        if not bot:
+            bot = Bot(bots[1])
+            all_bots.add_bot(bot)
+        if bots[0] not in bot.nums:
+            bot.nums.append(bots[0])
+            bot.nums.sort()
+        # all_bots[bots[1]].append(bots[0])
+print all_bots
 
     # bots = {}
     # for line in bot_file:
