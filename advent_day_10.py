@@ -14,6 +14,11 @@ class Bot(object):
         self.high = None
         self.low = None
 
+    def add_num(self, num2):
+        if num2 not in self.nums:
+            self.nums.append(num2)
+            self.nums.sort()
+
 class AllBots(object):
 
     def __init__(self):
@@ -42,9 +47,7 @@ for line in lines:
         if not bot:
             bot = Bot(bots[1])
             all_bots.add_bot(bot)
-        if bots[0] not in bot.nums:
-            bot.nums.append(bots[0])
-            bot.nums.sort()
+        bot.add_num(bots[0])
     else:
         bot = all_bots.find_bot(bots[0])
         if not bot:
@@ -62,5 +65,23 @@ for line in lines:
             if not all_bots.find_bot(bots[2]):
                 new_high = Bot(bots[2])
                 all_bots.add_bot(new_high)
-                bot.high = new_low 
-print all_bots
+                bot.high = new_high
+
+print "All bots added: ", all_bots
+
+skip = set()
+searching = True
+while searching:
+    for bot in all_bots.bots:
+        if bot in skip:
+            continue
+        if len(bot.nums) > 1:
+            if bot.nums == [17, 61]:
+                print "Part 1: ", bot.num
+                searching = False
+            if bot.low:
+                bot.low.add_num(bot.nums[0])
+            if bot.high:
+                bot.high.add_num(bot.nums[-1])
+            skip.add(bot)
+            print "Completed: bot", bot.num
