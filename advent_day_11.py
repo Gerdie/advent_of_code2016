@@ -30,9 +30,20 @@ class Floor(object):
         if self.level == 0:
             self.elevator = True
 
-    def is_balanced(self):
-        for item in self.contents:
-            pass
+    @staticmethod
+    def is_balanced(altered_set):
+        micros = set()
+        gens = set()
+        for item in altered_set:
+            if isinstance(item, Microchip):
+                micros.add(item.material)
+            else:
+                gens.add(item.material)
+        contents = gens ^ micros
+        if micros & contents and gens & contents:
+            return False
+        return True
+
 
     def can_move(self, *args):
         if len(*args) > 2:
