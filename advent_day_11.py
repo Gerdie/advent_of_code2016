@@ -14,11 +14,17 @@ class Microchip(object):
     def __init__(self, material):
         self.material = material
 
+    def __repr__(self):
+        return "{} microchip".format(self.material)
+
 
 class Generator(object):
 
     def __init__(self, material):
         self.material = material
+
+    def __repr__(self):
+        return "{} generator".format(self.material)
 
 
 class Floor(object):
@@ -29,6 +35,9 @@ class Floor(object):
         self.elevator = False
         if self.level == 0:
             self.elevator = True
+
+    def __repr__(self):
+        return str(self.contents)
 
     @staticmethod
     def is_balanced(altered_set):
@@ -44,20 +53,26 @@ class Floor(object):
             return False
         return True
 
-
     def can_move(self, *args):
         if len(*args) > 2:
             return False
+        return self.is_balanced(self.contents - set(*args))
 
     def can_accept(self, *args):
-        pass
+        return self.is_balanced(self.contents + set(*args))
 
 building = []
 
-for line in input11.split("\n"):
+for i, line in enumerate(input11.split("\n")):
+    floor = Floor(i)
     microchips = microchip_pattern.findall(line)
+    for micro in microchips:
+        new = Microchip(micro)
+        floor.contents.add(new)
     generators = generator_pattern.findall(line)
-    floor = microchips + generators
+    for gen in generators:
+        new = Generator(gen)
+        floor.contents.add(new)
     print floor
     building.append(floor)
 
